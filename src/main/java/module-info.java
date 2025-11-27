@@ -9,7 +9,9 @@ module org.example._erronka_java {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires java.sql;
+    requires javafx.graphics;
 
-    opens org.example._erronka_java to javafx.fxml;
-    exports org.example._erronka_java;
+    opens Pantailak to javafx.fxml;
+    exports Pantailak;
 }
