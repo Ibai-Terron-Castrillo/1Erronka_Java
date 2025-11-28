@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import services.LoginService;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -43,15 +44,12 @@ public class LoginController {
         Erabiltzailea erab = new Erabiltzailea(user, pass);
         ErabiltzaileKudeaketa erabiltzaileKudeaketa = new ErabiltzaileKudeaketa();
 
-        try {
-            if (erabiltzaileKudeaketa.balidatu(erab)) {
-                menuNagusiaIreki();
-            } else {
-                erroreaErakutsi("Erabiltzailea edo pasahitza okerrak");
-            }
-        } catch (SQLException e) {
-            erroreaErakutsi("Errorea datu basearekin: " + e.getMessage());
-            e.printStackTrace();
+        boolean ok = LoginService.login(user, pass);
+
+        if (ok) {
+            menuNagusiaIreki();
+        } else {
+            erroreaErakutsi("Erabiltzailea edo pasahitza okerrak");
         }
     }
 
