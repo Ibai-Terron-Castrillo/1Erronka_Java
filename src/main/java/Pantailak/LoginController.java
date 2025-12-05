@@ -8,10 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import services.LoginService;
 
@@ -32,24 +29,30 @@ public class LoginController {
     private Button irten;
 
     @FXML
-    protected void saioaHasi() {
+    private void saioaHasi() {
+
         String user = erabiltzailea.getText();
         String pass = pasahitza.getText();
 
-        if (user.isEmpty() || pass.isEmpty()) {
-            erroreaErakutsi("Erabiltzailea eta pasahitza bete behar dira");
-            return;
-        }
+        String result = LoginService.login(user, pass);
 
-        Erabiltzailea erab = new Erabiltzailea(user, pass);
-        ErabiltzaileKudeaketa erabiltzaileKudeaketa = new ErabiltzaileKudeaketa();
+        switch (result) {
 
-        boolean ok = LoginService.login(user, pass);
+            case "OK":
+                menuNagusiaIreki();
+                break;
 
-        if (ok) {
-            menuNagusiaIreki();
-        } else {
-            erroreaErakutsi("Erabiltzailea edo pasahitza okerrak");
+            case "BAD_CREDENTIALS":
+                erroreaErakutsi("Erabiltzailea edo pasahitza okerrak dira.");
+                break;
+
+            case "NO_PERMISSION":
+                erroreaErakutsi("Ez duzu baimenik sistemara sartzeko.");
+                break;
+
+            default:
+                erroreaErakutsi("Errore ezezaguna.");
+                break;
         }
     }
 

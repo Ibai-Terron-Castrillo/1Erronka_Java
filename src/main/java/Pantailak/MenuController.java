@@ -49,4 +49,23 @@ public class MenuController {
         alert.setContentText(mezua);
         alert.showAndWait();
     }
+
+    @FXML
+    private void onLangileakClick() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("langileak-view.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Langileak");
+            stage.setMaximized(true);
+            stage.centerOnScreen();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

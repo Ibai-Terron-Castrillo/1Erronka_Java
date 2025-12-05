@@ -1,48 +1,59 @@
 package services;
 
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class LoginService {
 
-    // API helbidea - aldatu behar baduzu hemen
-    private static final String API_URL = "http://localhost:5000/api/login";
+    public static String login(String erabiltzailea, String pasahitza) {
 
-    public static boolean login(String erabiltzailea, String pasahitza) {
         try {
-            URL url = new URL(API_URL);
+            URL url = new URL("http://localhost:5000/api/login");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json; utf-8");
-            conn.setRequestProperty("Accept", "application/json");
+            conn.setRequestProperty("Content-Type", "application/json");
             conn.setDoOutput(true);
 
-            String json = String.format(
-                    "{\"erabiltzailea\":\"%s\",\"pasahitza\":\"%s\"}",
-                    escapeJson(erabiltzailea),
-                    escapeJson(pasahitza)
-            );
+            String json = "{ \"erabiltzailea\": \"" + erabiltzailea + "\", \"pasahitza\": \"" + pasahitza + "\" }";
 
             try (OutputStream os = conn.getOutputStream()) {
-                byte[] input = json.getBytes("utf-8");
-                os.write(input, 0, input.length);
+                os.write(json.getBytes());
             }
 
             int code = conn.getResponseCode();
-            // 200 -> OK. Bestela, 401 Unauthorized edo bestelakoak
-            return code == 200;
+
+            InputStream is = (code >= 200 && code < 300)
+                    ? conn.getInputStream()
+                    : conn.getErrorStream();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            StringBuilder sb = new StringBuilder();
+            String line;
+
+            while ((line = br.readLine()) != null)
+                sb.append(line);
+
+            String response = sb.toString();
+
+            if (code == 200) {
+                return "OK";
+            }
+
+            if (response.contains("Erabiltzaile edo pasahitz okerra")) {
+                return "BAD_CREDENTIALS";
+            }
+
+            if (response.contains("Ez duzu baimenik sartzeko")) {
+                return "NO_PERMISSION";
+            }
+
+            return "ERROR";
 
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return "ERROR";
         }
-    }
-
-    // Oso oinarrizko JSON escaping (gehienetan nahikoa)
-    private static String escapeJson(String s) {
-        if (s == null) return "";
-        return s.replace("\\", "\\\\").replace("\"", "\\\"");
     }
 }

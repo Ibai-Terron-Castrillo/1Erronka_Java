@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Pantailak.LangileakController">
+
+    <top>
+        <ToolBar>
+            <Button fx:id="btnAdd"    graphicTextGap="10">
+                <graphic>
+                    <ImageView fitHeight="24" fitWidth="24">
+                        <image>
+                            <Image url="@../Irudiak/add.png" />
+                        </image>
+                    </ImageView>                </graphic>
+                <tooltip>
+                    <Tooltip text="Langile berria sortu"/>
+                </tooltip>
+            </Button>
+
+            <Button fx:id="btnEdit">
+                <graphic>
+                    <ImageView fitHeight="24" fitWidth="24">
+                        <image>
+                            <Image url="@../Irudiak/edit.png" />
+                        </image>
+                    </ImageView>                </graphic>
+                <tooltip>
+                    <Tooltip text="Aldatu hautatutako langilea"/>
+                </tooltip>
+            </Button>
+
+            <Button fx:id="btnDelete">
+                <graphic>
+                    <ImageView fitHeight="24" fitWidth="24">
+                        <image>
+                            <Image url="@../Irudiak/delete.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+                <tooltip>
+                    <Tooltip text="Ezabatu hautatutako langilea"/>
+                </tooltip>
+            </Button>
+        </ToolBar>
+    </top>
+
+    <center>
+        <TableView fx:id="tableLangileak">
+
+            <columns>
+                <TableColumn fx:id="colId"        text="ID"/>
+                <TableColumn fx:id="colIzena"     text="Izena"/>
+                <TableColumn fx:id="colAbizena1"   text="1. Abizena"/>
+                <TableColumn fx:id="colAbizena2"   text="2. Abizena"/>
+                <TableColumn fx:id="colTelefonoa" text="Telefonoa"/>
+                <TableColumn fx:id="colLanpostua" text="Lanpostua"/>
+            </columns>
+
+        </TableView>
+    </center>
+</BorderPane>
+

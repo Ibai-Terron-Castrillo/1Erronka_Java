@@ -11,7 +11,12 @@ module org.example._erronka_java {
     requires eu.hansolo.tilesfx;
     requires java.sql;
     requires javafx.graphics;
+    requires java.net.http;
+    requires com.google.gson;
 
     opens Pantailak to javafx.fxml;
+    opens Klaseak to javafx.base, com.google.gson;
+    opens icons;
+
     exports Pantailak;
 }

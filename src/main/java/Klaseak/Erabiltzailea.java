@@ -52,4 +52,8 @@ public class Erabiltzailea {
     public void setPasahitza(String pasahitza) {
         this.pasahitza = pasahitza;
     }
+
+    public void setLangilea(Langilea l) {
+
+    }
 }
