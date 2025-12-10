@@ -5,66 +5,103 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.geometry.Insets?>
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="Pantailak.LangileakController">
 
     <top>
-        <ToolBar>
-            <Button fx:id="btnAdd"    graphicTextGap="10">
+        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: #f0f0f0;">
+            <Button fx:id="atzeraBotoia" prefHeight="45.0" prefWidth="45.0"
+                    onAction="#atzeraBueltatu"
+                    style="-fx-background-color: #F5322F; -fx-background-radius: 25; -fx-border-color: transparent;">
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+                <effect>
+                    <Glow level="0.4" />
+                </effect>
                 <graphic>
-                    <ImageView fitHeight="24" fitWidth="24">
-                        <image>
-                            <Image url="@../Irudiak/add.png" />
-                        </image>
-                    </ImageView>                </graphic>
-                <tooltip>
-                    <Tooltip text="Langile berria sortu"/>
-                </tooltip>
-            </Button>
-
-            <Button fx:id="btnEdit">
-                <graphic>
-                    <ImageView fitHeight="24" fitWidth="24">
-                        <image>
-                            <Image url="@../Irudiak/edit.png" />
-                        </image>
-                    </ImageView>                </graphic>
-                <tooltip>
-                    <Tooltip text="Aldatu hautatutako langilea"/>
-                </tooltip>
-            </Button>
-
-            <Button fx:id="btnDelete">
-                <graphic>
-                    <ImageView fitHeight="24" fitWidth="24">
-                        <image>
-                            <Image url="@../Irudiak/delete.png" />
-                        </image>
-                    </ImageView>
+                    <SVGPath content="M15 19l-7-7 7-7"
+                             style="-fx-stroke: white; -fx-stroke-width: 2.5; -fx-fill: transparent;" />
                 </graphic>
                 <tooltip>
-                    <Tooltip text="Ezabatu hautatutako langilea"/>
+                    <Tooltip text="Atzera Bueltatu" />
                 </tooltip>
             </Button>
-        </ToolBar>
+
+            <Pane HBox.hgrow="ALWAYS" />
+
+            <HBox spacing="5" alignment="CENTER">
+                <Button fx:id="btnAdd" graphicTextGap="10" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView fitHeight="24" fitWidth="24">
+                            <image>
+                                <Image url="@../Irudiak/add.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Langile berria sortu"/>
+                    </tooltip>
+                </Button>
+
+                <Button fx:id="btnEdit" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView fitHeight="24" fitWidth="24">
+                            <image>
+                                <Image url="@../Irudiak/edit.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Aldatu hautatutako langilea"/>
+                    </tooltip>
+                </Button>
+
+                <Button fx:id="btnDelete" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView fitHeight="24" fitWidth="24">
+                            <image>
+                                <Image url="@../Irudiak/delete.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Ezabatu hautatutako langilea"/>
+                    </tooltip>
+                </Button>
+            </HBox>
+
+            <Pane prefWidth="45" />
+
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+            </padding>
+        </HBox>
     </top>
 
     <center>
         <TableView fx:id="tableLangileak">
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
 
             <columns>
-                <TableColumn fx:id="colId"        text="ID"/>
-                <TableColumn fx:id="colIzena"     text="Izena"/>
-                <TableColumn fx:id="colAbizena1"   text="1. Abizena"/>
-                <TableColumn fx:id="colAbizena2"   text="2. Abizena"/>
-                <TableColumn fx:id="colTelefonoa" text="Telefonoa"/>
-                <TableColumn fx:id="colLanpostua" text="Lanpostua"/>
+                <TableColumn fx:id="colId" text="ID" prefWidth="80"/>
+                <TableColumn fx:id="colIzena" text="Izena" prefWidth="150"/>
+                <TableColumn fx:id="colAbizena1" text="1. Abizena" prefWidth="150"/>
+                <TableColumn fx:id="colAbizena2" text="2. Abizena" prefWidth="150"/>
+                <TableColumn fx:id="colTelefonoa" text="Telefonoa" prefWidth="150"/>
+                <TableColumn fx:id="colLanpostua" text="Lanpostua" prefWidth="200"/>
             </columns>
 
+            <BorderPane.margin>
+                <Insets top="10" right="10" bottom="10" left="10" />
+            </BorderPane.margin>
         </TableView>
     </center>
 </BorderPane>
-

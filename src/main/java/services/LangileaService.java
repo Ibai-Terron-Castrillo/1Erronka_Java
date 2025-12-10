@@ -58,11 +58,19 @@ public class LangileaService {
     public static List<Lanpostua> getLanpostuak() {
         try {
             var res = ApiClient.get("/api/lanpostua");
+
+            if (res == null || res.body() == null || res.body().isEmpty()) {
+                return List.of();
+            }
+
             Type listType = new TypeToken<List<Lanpostua>>(){}.getType();
-            return new Gson().fromJson(res.body(), listType);
+            List<Lanpostua> lista = gson.fromJson(res.body(), listType);
+
+            return lista != null ? lista : List.of();
         } catch (Exception e) {
             e.printStackTrace();
             return List.of();
         }
     }
+
 }

@@ -6,9 +6,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.geometry.Insets?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="Pantailak.LangileakForm"
-      spacing="10" alignment="CENTER" padding="15">
+      spacing="10"
+      alignment="CENTER">
+
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
 
     <TextField fx:id="txtIzena" promptText="Izena"/>
     <TextField fx:id="txtAbizena1" promptText="1. Abizena"/>
@@ -29,4 +35,3 @@
         <Button text="Utzi" onAction="#onCancel"/>
     </HBox>
 </VBox>
-

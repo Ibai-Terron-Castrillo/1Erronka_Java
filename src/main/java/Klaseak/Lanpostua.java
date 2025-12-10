@@ -24,6 +24,12 @@ public class Lanpostua {
         return izena;
     }
 
+    @Override
+    public String toString() {
+        return izena;
+    }
+
+
     public void setIzena(String izena) {
         this.izena = izena;
     }

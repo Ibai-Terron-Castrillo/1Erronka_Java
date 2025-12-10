@@ -2,20 +2,15 @@ package Klaseak;
 
 public class Erabiltzailea {
     private int id;
-    private int langileak_id;
-    private String erabiltzailea;
+    private String izena;
     private String pasahitza;
+    private Langilea langilea;
 
-    public Erabiltzailea(int id, int langileak_id, String erabiltzailea, String pasahitza) {
+    public Erabiltzailea(int id, String izena, String pasahitza, Langilea langilea) {
         this.id = id;
-        this.langileak_id = langileak_id;
-        this.erabiltzailea = erabiltzailea;
+        this.izena = izena;
         this.pasahitza = pasahitza;
-    }
-
-    public Erabiltzailea(String erabiltzailea, String pasahitza) {
-        this.erabiltzailea = erabiltzailea;
-        this.pasahitza = pasahitza;
+        this.langilea = langilea;
     }
 
     public Erabiltzailea() {
@@ -29,20 +24,12 @@ public class Erabiltzailea {
         this.id = id;
     }
 
-    public int getLangileak_id() {
-        return langileak_id;
+    public String getIzena() {
+        return izena;
     }
 
-    public void setLangileak_id(int langileak_id) {
-        this.langileak_id = langileak_id;
-    }
-
-    public String getErabiltzailea() {
-        return erabiltzailea;
-    }
-
-    public void setErabiltzailea(String erabiltzailea) {
-        this.erabiltzailea = erabiltzailea;
+    public void setIzena(String izena) {
+        this.izena = izena;
     }
 
     public String getPasahitza() {
@@ -53,7 +40,11 @@ public class Erabiltzailea {
         this.pasahitza = pasahitza;
     }
 
-    public void setLangilea(Langilea l) {
+    public Langilea getLangilea() {
+        return langilea;
+    }
 
+    public void setLangilea(Langilea langilea) {
+        this.langilea = langilea;
     }
 }

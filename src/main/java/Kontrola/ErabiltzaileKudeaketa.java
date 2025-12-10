@@ -18,7 +18,7 @@ public class ErabiltzaileKudeaketa {
         String sql = "SELECT * FROM Erabiltzaileak WHERE erabiltzailea=? AND pasahitza=?";
 
         pst = conn.prepareStatement(sql);
-        pst.setString(1, erabiltzailea.getErabiltzailea());
+        pst.setString(1, erabiltzailea.getIzena());
         pst.setString(2, erabiltzailea.getPasahitza());
         rs = pst.executeQuery();
         boolean exists = rs.next();

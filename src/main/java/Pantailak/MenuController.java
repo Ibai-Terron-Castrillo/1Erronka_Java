@@ -1,5 +1,7 @@
 package Pantailak;
 
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -51,17 +53,27 @@ public class MenuController {
     }
 
     @FXML
-    private void onLangileakClick() {
+    private void onLangileakClick(ActionEvent ActionEvent) {
         try {
+            Stage currentStage = (Stage) ((Node) ActionEvent.getSource()).getScene().getWindow();
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("langileak-view.fxml"));
             Parent root = loader.load();
 
-            Stage stage = new Stage();
-            stage.setTitle("Langileak");
-            stage.setMaximized(true);
-            stage.centerOnScreen();
-            stage.setScene(new Scene(root));
-            stage.show();
+            Stage newStage = new Stage();
+            newStage.setTitle("Langileak");
+            newStage.setMaximized(true);
+            newStage.centerOnScreen();
+            newStage.setScene(new Scene(root));
+
+            newStage.setOnCloseRequest(e -> {
+                Platform.exit();
+                System.exit(0);
+            });
+
+            currentStage.close();
+
+            newStage.show();
 
         } catch (Exception e) {
             e.printStackTrace();
