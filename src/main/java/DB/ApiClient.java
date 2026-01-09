@@ -40,6 +40,16 @@ public class ApiClient {
         return client.send(req, HttpResponse.BodyHandlers.ofString());
     }
 
+    public static HttpResponse<String> patch(String endpoint, String body) throws Exception {
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + endpoint))
+                .header("Content-Type", "application/json")
+                .method("PATCH", HttpRequest.BodyPublishers.ofString(body))
+                .build();
+
+        return client.send(req, HttpResponse.BodyHandlers.ofString());
+    }
+
     public static HttpResponse<String> delete(String endpoint) throws Exception {
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + endpoint))

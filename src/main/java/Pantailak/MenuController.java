@@ -80,4 +80,31 @@ public class MenuController {
         }
     }
 
+    @FXML
+    private void onOsagaiakClick(ActionEvent actionEvent) {
+        try {
+            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("osagaiak-view.fxml"));
+            Parent root = loader.load();
+
+            Stage newStage = new Stage();
+            newStage.setTitle("Osagaiak");
+            newStage.setMaximized(true);
+            newStage.centerOnScreen();
+            newStage.setScene(new Scene(root));
+
+            newStage.setOnCloseRequest(e -> {
+                Platform.exit();
+                System.exit(0);
+            });
+
+            currentStage.close();
+            newStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -13,10 +13,12 @@ module org.example._erronka_java {
     requires javafx.graphics;
     requires java.net.http;
     requires com.google.gson;
+    requires javafx.base;
 
     opens Pantailak to javafx.fxml;
     opens Klaseak to javafx.base, com.google.gson;
     opens icons;
+    opens css;
 
     exports Pantailak;
 }

@@ -1,0 +1,145 @@
+/* ===== VARIABLES GLOBALES ===== */
+.root {
+    /* Colores base */
+    -osis-primary: #F3863A;        /* Naranja - Fuego Controlado */
+    -osis-secondary: #1D505B;      /* Azul - Océano Profundo */
+    -osis-beige: #C19A6B;          /* Beige Epela */
+    -osis-surface: #F5F5F5;        /* Blanco Garbia */
+
+    /* Colores por aplicación */
+    -osis-management: #5E1B4F;     /* Management - Morado */
+    -osis-sales: #1B345D;          /* Sales - Azul */
+    -osis-tpv: #1C5F2B;            /* TPV - Verde */
+    -osis-kitchen: #5B1C1C;        /* Kitchen - Rojo */
+
+    /* Estados */
+    -osis-success: #1C5F2B;        /* Verde - Éxito */
+    -osis-danger: #5B1C1C;         /* Rojo - Error */
+    -osis-info: #1B345D;           /* Azul - Info */
+
+    /* Tipografías */
+    -osis-font-title: "Cormorant Garamond";
+    -osis-font-body: "Segoe UI";
+}
+
+/* ===== TIPOGRAFÍA ===== */
+.title-large {
+    -fx-font-family: "Cormorant Garamond";
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.title-medium {
+    -fx-font-family: "Cormorant Garamond";
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.title-small {
+    -fx-font-family: "Cormorant Garamond";
+    -fx-font-size: 18px;
+    -fx-font-weight: 600; /* semibold en JavaFX es 600 */
+}
+
+.body-text {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 14px;
+}
+
+.label {
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: -osis-secondary;
+}
+
+/* ===== BOTONES ===== */
+.btn-primary {
+    -fx-background-color: -osis-primary;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI";
+    -fx-font-weight: 600;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16;
+}
+
+.btn-secondary {
+    -fx-background-color: -osis-secondary;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI";
+    -fx-font-weight: 600;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16;
+}
+
+.btn-danger {
+    -fx-background-color: -osis-danger;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI";
+    -fx-font-weight: 600;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16;
+}
+
+/* ===== TABLAS ===== */
+.table-view {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: -osis-secondary;
+}
+
+.table-view .column-header,
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* ===== TARJETAS KPI (para Management App) ===== */
+.kpi-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-padding: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+}
+
+.kpi-value {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.kpi-value.positive {
+    -fx-text-fill: -osis-tpv; /* Verde para positivo */
+}
+
+.kpi-value.negative {
+    -fx-text-fill: -osis-kitchen; /* Rojo para negativo */
+}
+
+/* ===== INPUTS ===== */
+.text-field, .combo-box {
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-color: #1B345D;
+    -fx-border-width: 1;
+}
+
+.text-field:focused, .combo-box:focused {
+    -fx-border-color: -osis-primary;
+    -fx-border-width: 2;
+}
+
+/* ===== MODO CLARO/OSCURO ===== */
+.root.light-mode {
+    -fx-background-color: -osis-beige;
+}
+
+.root.dark-mode {
+    -fx-background-color: -osis-secondary;
+    -fx-text-fill: white;
+}
+
+.root.dark-mode .label {
+    -fx-text-fill: white;
+}
