@@ -135,7 +135,7 @@
 
                     <HBox spacing="10">
                         <Button fx:id="garbituButton"
-                                text="🗑️Garbitu"
+                                text="Garbitu"
                                 style="-fx-background-color: #a0aec0; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand; -fx-padding: 8 15;"/>
 
                         <Pane HBox.hgrow="ALWAYS" />

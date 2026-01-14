@@ -103,7 +103,7 @@ public class EskaeraService {
         return null;
     }
 
-    public static boolean createEskaera(int eskaeraZenbakia) {
+    public static boolean createEskaera(int eskaeraZenbakia, double guztira) {
         try {
             JsonObject requestBody = new JsonObject();
             requestBody.addProperty("totala", 0);
