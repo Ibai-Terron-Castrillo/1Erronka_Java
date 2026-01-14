@@ -44,7 +44,7 @@
                       style="-fx-background-radius: 5;"/>
 
             <Button fx:id="refreshButton"
-                    text="Freskatu"
+                    text="🔄 Freskatu"
                     onAction="#handleRefresh"
                     style="-fx-background-color: #4299e1; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;"/>
         </HBox>

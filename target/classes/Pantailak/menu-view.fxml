@@ -33,7 +33,7 @@
             </tooltip>
         </Button>
         <Button fx:id="btnLangileak" layoutX="690.0" layoutY="616.0" onAction="#onLangileakClick" prefWidth="120" text="Langileak" />
-        <Button fx:id="btnOsagaiak" layoutX="720.0" layoutY="616.0" onAction="#onOsagaiakClick" prefWidth="120" text="Osagaiak" />
-
+        <Button fx:id="btnOsagaiak" layoutX="800.0" layoutY="616.0" onAction="#onOsagaiakClick" prefWidth="120" text="Osagaiak" />
+        <Button fx:id="btnEskaerak" layoutX="910.0" layoutY="616.0" onAction="#onEskaerakClick" prefWidth="120" text="Eskaerak" />
     </children>
 </AnchorPane>

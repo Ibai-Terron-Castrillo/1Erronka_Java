@@ -13,10 +13,8 @@
             fx:controller="Pantailak.LangileakController"
             style="-fx-background-color: #f8fafc;">
 
-    <!-- TOP: HEADER -->
     <top>
         <VBox spacing="0">
-            <!-- Primera fila -->
             <HBox spacing="15" alignment="CENTER_LEFT"
                   style="-fx-background-color: white; -fx-padding: 15 20; -fx-border-color: #e2e8f0; -fx-border-width: 0 0 1 0;">
 
@@ -52,14 +50,6 @@
                         </tooltip>
                     </Button>
 
-                    <Button fx:id="btnEdit"
-                            text="Gorde"
-                            style="-fx-background-color: #3182ce; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand; -fx-padding: 8 15;">
-                        <tooltip>
-                            <Tooltip text="Langilea gorde"/>
-                        </tooltip>
-                    </Button>
-
                     <Button fx:id="btnDelete"
                             text="Ezabatu"
                             style="-fx-background-color: #e53e3e; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand; -fx-padding: 8 15;">
@@ -70,7 +60,6 @@
                 </HBox>
             </HBox>
 
-            <!-- Segunda fila: Filtros -->
             <HBox spacing="10" alignment="CENTER_LEFT"
                   style="-fx-background-color: #f7fafc; -fx-padding: 10 20; -fx-border-color: #e2e8f0; -fx-border-width: 0 0 1 0;">
 
@@ -95,10 +84,8 @@
         </VBox>
     </top>
 
-    <!-- CENTER: TABLA Y FORMULARIO -->
     <center>
         <SplitPane dividerPositions="0.7" style="-fx-padding: 15;">
-            <!-- TABLA (70%) -->
             <VBox spacing="10">
                 <TableView fx:id="tableLangileak"
                            style="-fx-background-color: white; -fx-border-color: #e2e8f0; -fx-border-width: 1; -fx-background-radius: 5;">
@@ -131,20 +118,17 @@
                 </TableView>
             </VBox>
 
-            <!-- FORMULARIO (30%) -->
             <VBox spacing="20" style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #e2e8f0; -fx-border-width: 1; -fx-background-radius: 5;">
                 <Label text="Langilearen datuak"
                        style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #2d3748;"/>
 
                 <VBox spacing="15">
-                    <!-- Izena -->
                     <VBox spacing="5">
                         <Label text="Izena *" style="-fx-font-weight: bold; -fx-text-fill: #4a5568;"/>
                         <TextField fx:id="txtIzena"
                                    style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-padding: 8;"/>
                     </VBox>
 
-                    <!-- Abizenak -->
                     <HBox spacing="10">
                         <VBox spacing="5" HBox.hgrow="ALWAYS">
                             <Label text="1. Abizena" style="-fx-font-weight: bold; -fx-text-fill: #4a5568;"/>
@@ -158,26 +142,22 @@
                         </VBox>
                     </HBox>
 
-                    <!-- Telefonoa -->
                     <VBox spacing="5">
                         <Label text="Telefonoa *" style="-fx-font-weight: bold; -fx-text-fill: #4a5568;"/>
                         <TextField fx:id="txtTelefonoa"
                                    style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-padding: 8;"/>
                     </VBox>
 
-                    <!-- Lanpostua -->
                     <VBox spacing="5">
                         <Label text="Lanpostua *" style="-fx-font-weight: bold; -fx-text-fill: #4a5568;"/>
                         <ComboBox fx:id="comboLanpostu"
                                   style="-fx-background-radius: 5; -fx-padding: 8;"/>
                     </VBox>
 
-                    <!-- Erabiltzaile checkbox -->
                     <CheckBox fx:id="checkErabiltzaile"
                               text="Erabiltzailea sortu"
                               style="-fx-font-weight: bold;"/>
 
-                    <!-- Erabiltzaile datuak (inicialmente oculto) -->
                     <VBox fx:id="boxErabiltzaile"
                           spacing="10"
                           style="-fx-padding: 15; -fx-background-color: #f7fafc; -fx-border-color: #e2e8f0; -fx-border-width: 1; -fx-border-radius: 5;"
@@ -201,7 +181,6 @@
                     </VBox>
                 </VBox>
 
-                <!-- Botones del formulario -->
                 <HBox spacing="10" alignment="CENTER_RIGHT">
                     <Button fx:id="btnCancel"
                             text="Utzi"
@@ -215,7 +194,6 @@
         </SplitPane>
     </center>
 
-    <!-- BOTTOM: ESTADÍSTICAS -->
     <bottom>
         <HBox spacing="20" alignment="CENTER_LEFT"
               style="-fx-background-color: white; -fx-padding: 15 20; -fx-border-color: #e2e8f0; -fx-border-width: 1 0 0 0;">
@@ -248,7 +226,6 @@
 
             <Pane HBox.hgrow="ALWAYS" />
 
-            <!-- Botón refresh -->
             <Button fx:id="refreshButton"
                     text="🔄 Freskatu"
                     style="-fx-background-color: #4a5568; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand; -fx-padding: 8 15;"/>
