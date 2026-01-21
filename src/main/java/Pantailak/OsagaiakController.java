@@ -16,6 +16,8 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.io.IOException;
 import java.util.List;
 
 public class OsagaiakController {
@@ -423,26 +425,16 @@ public class OsagaiakController {
         try {
             Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("menu-view.fxml"));
-            Parent root = loader.load();
+            StageManager.switchStage(
+                    currentStage,
+                    "menu-view.fxml",
+                    "Menu Nagusia",
+                    true
+            );
 
-            Stage newStage = new Stage();
-            newStage.setTitle("Menu Nagusia");
-            newStage.setMaximized(true);
-            newStage.centerOnScreen();
-            newStage.setScene(new Scene(root));
-
-            newStage.setOnCloseRequest(e -> {
-                Platform.exit();
-                System.exit(0);
-            });
-
-            currentStage.close();
-
-            newStage.show();
-
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

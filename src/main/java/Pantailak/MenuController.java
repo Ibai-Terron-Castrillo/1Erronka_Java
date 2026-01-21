@@ -22,7 +22,8 @@ public class MenuController {
     private Button atzeraBotoia;
 
     @FXML
-    private void saioaItxi(javafx.event.ActionEvent event) {
+    private void saioaItxi(ActionEvent event) {
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Saioa itxi");
         alert.setHeaderText("Ziur zaude saioa itxi nahi duzula?");
@@ -32,17 +33,17 @@ public class MenuController {
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
-                Parent loginRoot = FXMLLoader.load(getClass().getResource("login-view.fxml"));
-                Scene loginScene = new Scene(loginRoot);
-                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                currentStage.setScene(loginScene);
-                currentStage.setTitle("Saioa Hasi");
-                currentStage.centerOnScreen();
+                Stage currentStage =
+                        (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                StageManager.switchToLogin(currentStage);
+
             } catch (IOException e) {
                 erroreaErakutsi("Errorea saioa ixtean: " + e.getMessage());
             }
         }
     }
+
 
     private void erroreaErakutsi(String mezua) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -52,85 +53,81 @@ public class MenuController {
         alert.showAndWait();
     }
 
+    private Stage getCurrentStage(ActionEvent event) {
+        return (Stage) ((Node) event.getSource()).getScene().getWindow();
+    }
+
     @FXML
-    private void onLangileakClick(ActionEvent ActionEvent) {
+    private void onLangileakClick(ActionEvent event) {
         try {
-            Stage currentStage = (Stage) ((Node) ActionEvent.getSource()).getScene().getWindow();
+            StageManager.switchStage(
+                    getCurrentStage(event),
+                    "langileak-view.fxml",
+                    "Langileak",
+                    true
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("langileak-view.fxml"));
-            Parent root = loader.load();
 
-            Stage newStage = new Stage();
-            newStage.setTitle("Langileak");
-            newStage.setMaximized(true);
-            newStage.centerOnScreen();
-            newStage.setScene(new Scene(root));
+    @FXML
+    private void onOsagaiakClick(ActionEvent event) {
+        try {
+            StageManager.switchStage(
+                    getCurrentStage(event),
+                    "osagaiak-view.fxml",
+                    "Osagaiak",
+                    true
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-            newStage.setOnCloseRequest(e -> {
-                Platform.exit();
-                System.exit(0);
-            });
 
-            currentStage.close();
+    @FXML
+    private void onEskaerakClick(ActionEvent event) {
+        try {
+            StageManager.switchStage(
+                    getCurrentStage(event),
+                    "eskaerak-view.fxml",
+                    "Eskaerak",
+                    true
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-            newStage.show();
 
-        } catch (Exception e) {
+    @FXML
+    private void onHornitzaileakClick(ActionEvent event) {
+        try {
+            StageManager.switchStage(
+                    getCurrentStage(event),
+                    "hornitzaileak-view.fxml",
+                    "Hornitzaileak",
+                    true
+            );
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    private void onOsagaiakClick(ActionEvent actionEvent) {
+    private void onPlaterakClick(ActionEvent event) {
         try {
-            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("osagaiak-view.fxml"));
-            Parent root = loader.load();
-
-            Stage newStage = new Stage();
-            newStage.setTitle("Osagaiak");
-            newStage.setMaximized(true);
-            newStage.centerOnScreen();
-            newStage.setScene(new Scene(root));
-
-            newStage.setOnCloseRequest(e -> {
-                Platform.exit();
-                System.exit(0);
-            });
-
-            currentStage.close();
-            newStage.show();
-
-        } catch (Exception e) {
+            StageManager.switchStage(
+                    getCurrentStage(event),
+                    "platerak-view.fxml",
+                    "Platerak",
+                    true
+            );
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    @FXML
-    private void onEskaerakClick(ActionEvent actionEvent) {
-        try {
-            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("eskaerak-view.fxml"));
-            Parent root = loader.load();
-
-            Stage newStage = new Stage();
-            newStage.setTitle("Eskaerak");
-            newStage.setMaximized(true);
-            newStage.centerOnScreen();
-            newStage.setScene(new Scene(root));
-
-            newStage.setOnCloseRequest(e -> {
-                Platform.exit();
-                System.exit(0);
-            });
-
-            currentStage.close();
-            newStage.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

@@ -21,35 +21,56 @@ import Klaseak.Lanpostua;
 import services.ErabiltzaileaService;
 import services.LangileaService;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 
 public class LangileakController {
 
-    @FXML private TableView<Langilea> tableLangileak;
-    @FXML private TableColumn<Langilea, Integer> colId;
-    @FXML private TableColumn<Langilea, String> colIzena;
-    @FXML private TableColumn<Langilea, String> colAbizena1;
-    @FXML private TableColumn<Langilea, String> colAbizena2;
-    @FXML private TableColumn<Langilea, String> colTelefonoa;
-    @FXML private TableColumn<Langilea, String> colLanpostua;
+    @FXML
+    private TableView<Langilea> tableLangileak;
+    @FXML
+    private TableColumn<Langilea, Integer> colId;
+    @FXML
+    private TableColumn<Langilea, String> colIzena;
+    @FXML
+    private TableColumn<Langilea, String> colAbizena1;
+    @FXML
+    private TableColumn<Langilea, String> colAbizena2;
+    @FXML
+    private TableColumn<Langilea, String> colTelefonoa;
+    @FXML
+    private TableColumn<Langilea, String> colLanpostua;
 
-    @FXML private TextField txtIzena, txtAbizena1, txtAbizena2, txtTelefonoa;
-    @FXML private ComboBox<Lanpostua> comboLanpostu;
-    @FXML private CheckBox checkErabiltzaile;
-    @FXML private VBox boxErabiltzaile;
-    @FXML private TextField txtUser;
-    @FXML private PasswordField txtPass;
-    @FXML private Button btnSave, btnCancel;
+    @FXML
+    private TextField txtIzena, txtAbizena1, txtAbizena2, txtTelefonoa;
+    @FXML
+    private ComboBox<Lanpostua> comboLanpostu;
+    @FXML
+    private CheckBox checkErabiltzaile;
+    @FXML
+    private VBox boxErabiltzaile;
+    @FXML
+    private TextField txtUser;
+    @FXML
+    private PasswordField txtPass;
+    @FXML
+    private Button btnSave, btnCancel;
 
-    @FXML private TextField searchField;
-    @FXML private ComboBox<String> lanpostuFilter;
-    @FXML private ComboBox<String> ordenatuFilter;
-    @FXML private Label langileKopuruaLabel;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private ComboBox<String> lanpostuFilter;
+    @FXML
+    private ComboBox<String> ordenatuFilter;
+    @FXML
+    private Label langileKopuruaLabel;
 
-    @FXML private Label totalLangileakLabel, sukaldariakLabel, zerbitzariakLabel, adminLabel;
+    @FXML
+    private Label totalLangileakLabel, sukaldariakLabel, zerbitzariakLabel, adminLabel;
 
-    @FXML private Button btnAdd, btnEdit, btnDelete, atzeraBotoia, refreshButton;
+    @FXML
+    private Button btnAdd, btnEdit, btnDelete, atzeraBotoia, refreshButton;
 
     private ObservableList<Langilea> langileakLista;
     private FilteredList<Langilea> filteredData;
@@ -396,26 +417,16 @@ public class LangileakController {
         try {
             Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("menu-view.fxml"));
-            Parent root = loader.load();
+            StageManager.switchStage(
+                    currentStage,
+                    "menu-view.fxml",
+                    "Menu Nagusia",
+                    true
+            );
 
-            Stage newStage = new Stage();
-            newStage.setTitle("Menu Nagusia");
-            newStage.setMaximized(true);
-            newStage.centerOnScreen();
-            newStage.setScene(new Scene(root));
-
-            newStage.setOnCloseRequest(e -> {
-                Platform.exit();
-                System.exit(0);
-            });
-
-            currentStage.close();
-
-            newStage.show();
-
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

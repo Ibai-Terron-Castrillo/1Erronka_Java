@@ -9,31 +9,122 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.SVGPath?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Pantailak.MenuController">
+<AnchorPane prefHeight="800.0" prefWidth="1500.0"
+            style="-fx-background-color: WHITE;"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Pantailak.MenuController">
 
     <children>
-        <ImageView fitHeight="600" fitWidth="1200" layoutX="150.0" layoutY="100.0" preserveRatio="true">
+
+        <!-- LOGO CENTRADO -->
+        <ImageView fitHeight="420"
+                   fitWidth="900"
+                   layoutX="300"
+                   layoutY="120"
+                   preserveRatio="true">
             <image>
-                <Image url="@../Irudiak/Logo_Osis_Management.png" />
+                <Image url="@../Irudiak/Logo_Osis_Management.png"/>
             </image>
         </ImageView>
 
-        <Button fx:id="atzeraBotoia" layoutX="25.0" layoutY="25.0" onAction="#saioaItxi" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #F5322F; -fx-background-radius: 25; -fx-border-color: transparent;">
+        <!-- BOTÓN SALIR -->
+        <Button fx:id="atzeraBotoia"
+                layoutX="40"
+                layoutY="40"
+                prefHeight="48"
+                prefWidth="48"
+                onAction="#saioaItxi"
+                style="
+                    -fx-background-color: #1D505B;
+                    -fx-background-radius: 30;
+                    -fx-border-color: transparent;">
             <cursor>
-                <Cursor fx:constant="HAND" />
+                <Cursor fx:constant="HAND"/>
             </cursor>
             <effect>
-                <Glow level="0.4" />
+                <Glow level="0.3"/>
             </effect>
             <graphic>
-                <SVGPath content="M15 19l-7-7 7-7" style="-fx-stroke: white; -fx-stroke-width: 2.5; -fx-fill: transparent;" />
+                <SVGPath content="M15 19l-7-7 7-7"
+                         style="-fx-stroke: #F5F5F5; -fx-stroke-width: 2.5; -fx-fill: transparent;"/>
             </graphic>
             <tooltip>
-                <Tooltip text="Saioa itxi" />
+                <Tooltip text="Saioa itxi"/>
             </tooltip>
         </Button>
-        <Button fx:id="btnLangileak" layoutX="690.0" layoutY="616.0" onAction="#onLangileakClick" prefWidth="120" text="Langileak" />
-        <Button fx:id="btnOsagaiak" layoutX="800.0" layoutY="616.0" onAction="#onOsagaiakClick" prefWidth="120" text="Osagaiak" />
-        <Button fx:id="btnEskaerak" layoutX="910.0" layoutY="616.0" onAction="#onEskaerakClick" prefWidth="120" text="Eskaerak" />
+
+        <!-- BOTONERA INFERIOR -->
+        <Button fx:id="btnLangileak"
+                layoutX="460"
+                layoutY="600"
+                prefWidth="140"
+                prefHeight="44"
+                text="Langileak"
+                onAction="#onLangileakClick"
+                style="
+                    -fx-background-color: #1D505B;
+                    -fx-text-fill: #F5F5F5;
+                    -fx-font-family: 'Segoe UI';
+                    -fx-font-size: 14px;
+                    -fx-background-radius: 8;"/>
+
+        <Button fx:id="btnOsagaiak"
+                layoutX="610"
+                layoutY="600"
+                prefWidth="140"
+                prefHeight="44"
+                text="Osagaiak"
+                onAction="#onOsagaiakClick"
+                style="
+                    -fx-background-color: #1D505B;
+                    -fx-text-fill: #F5F5F5;
+                    -fx-font-family: 'Segoe UI';
+                    -fx-font-size: 14px;
+                    -fx-background-radius: 8;"/>
+
+        <Button fx:id="btnEskaerak"
+                layoutX="760"
+                layoutY="600"
+                prefWidth="140"
+                prefHeight="44"
+                text="Eskaerak"
+                onAction="#onEskaerakClick"
+                style="
+                    -fx-background-color: #F3863A;
+                    -fx-text-fill: #FFFFFF;
+                    -fx-font-family: 'Segoe UI';
+                    -fx-font-size: 14px;
+                    -fx-font-weight: bold;
+                    -fx-background-radius: 8;"/>
+
+        <Button fx:id="btnHornitzaileak"
+                layoutX="910"
+                layoutY="600"
+                prefWidth="140"
+                prefHeight="44"
+                text="Hornitzaileak"
+                onAction="#onHornitzaileakClick"
+                style="
+                    -fx-background-color: #1D505B;
+                    -fx-text-fill: #F5F5F5;
+                    -fx-font-family: 'Segoe UI';
+                    -fx-font-size: 14px;
+                    -fx-background-radius: 8;"/>
+
+        <Button fx:id="btnPlaterak"
+                layoutX="1060"
+                layoutY="600"
+                prefWidth="140"
+                prefHeight="44"
+                text="Platerak"
+                onAction="#onPlaterakClick"
+                style="
+                    -fx-background-color: #1D505B;
+                    -fx-text-fill: #F5F5F5;
+                    -fx-font-family: 'Segoe UI';
+                    -fx-font-size: 14px;
+                    -fx-background-radius: 8;"/>
+
     </children>
 </AnchorPane>

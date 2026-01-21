@@ -21,6 +21,10 @@ module org.example._erronka_java {
     opens Klaseak to javafx.base, com.google.gson;
     opens icons;
     opens css;
+    opens services to com.google.gson;
 
+    exports Klaseak;
     exports Pantailak;
+    exports services;
+
 }

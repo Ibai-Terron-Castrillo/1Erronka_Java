@@ -14,7 +14,7 @@ public class OsagaiakApplication extends Application {
 
         Scene scene = new Scene(loader.load());
 
-        try {
+            try {
             scene.getStylesheets().add(
                     OsagaiakApplication.class.getResource("/css/osis-suite.css").toExternalForm()
             );

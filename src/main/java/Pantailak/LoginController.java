@@ -59,33 +59,31 @@ public class LoginController {
     @FXML
     private void menuNagusiaIreki() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("menu-view.fxml"));
-            Parent root = loader.load();
+            Stage menuStage = StageManager.openStage(
+                    "menu-view.fxml",
+                    "Menu Nagusia",
+                    true,
+                    0,
+                    0
+            );
 
-            Stage menuStage = new Stage();
-            Scene scene = new Scene(root);
-            menuStage.setScene(scene);
-            menuStage.setTitle("Menu Nagusia");
-
-            menuStage.setMaximized(true);
-
-            menuStage.centerOnScreen();
-
-            Stage loginStage = (Stage) erabiltzailea.getScene().getWindow();
+            Stage loginStage =
+                    (Stage) erabiltzailea.getScene().getWindow();
             loginStage.close();
-
-            menuStage.show();
 
             menuStage.setOnCloseRequest(e -> {
                 Platform.exit();
                 System.exit(0);
             });
 
+            menuStage.show();
+
         } catch (IOException e) {
             erroreaErakutsi("Errorea menua irekitzean: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
 
     @FXML
     private void erroreaErakutsi(String mezua) {

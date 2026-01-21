@@ -21,6 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -807,26 +808,16 @@ public class EskaerakController {
         try {
             Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("menu-view.fxml"));
-            Parent root = loader.load();
+            StageManager.switchStage(
+                    currentStage,
+                    "menu-view.fxml",
+                    "Menu Nagusia",
+                    true
+            );
 
-            Stage newStage = new Stage();
-            newStage.setTitle("Menu Nagusia");
-            newStage.setMaximized(true);
-            newStage.centerOnScreen();
-            newStage.setScene(new Scene(root));
-
-            newStage.setOnCloseRequest(e -> {
-                Platform.exit();
-                System.exit(0);
-            });
-
-            currentStage.close();
-
-            newStage.show();
-
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }
