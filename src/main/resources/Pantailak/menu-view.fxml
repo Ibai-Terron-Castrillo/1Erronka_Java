@@ -17,7 +17,6 @@
 
     <children>
 
-        <!-- LOGO CENTRADO -->
         <ImageView fitHeight="420"
                    fitWidth="900"
                    layoutX="300"
@@ -28,7 +27,6 @@
             </image>
         </ImageView>
 
-        <!-- BOTÓN SALIR -->
         <Button fx:id="atzeraBotoia"
                 layoutX="40"
                 layoutY="40"
@@ -54,7 +52,6 @@
             </tooltip>
         </Button>
 
-        <!-- BOTONERA INFERIOR -->
         <Button fx:id="btnLangileak"
                 layoutX="460"
                 layoutY="600"
@@ -126,5 +123,18 @@
                     -fx-font-size: 14px;
                     -fx-background-radius: 8;"/>
 
+        <Button fx:id="btnMahaiak"
+                layoutX="1210"
+                layoutY="600"
+                prefWidth="140"
+                prefHeight="44"
+                text="Mahaiak"
+                onAction="#onMahaiakClick"
+                style="
+                    -fx-background-color: #1D505B;
+                    -fx-text-fill: #F5F5F5;
+                    -fx-font-family: 'Segoe UI';
+                    -fx-font-size: 14px;
+                    -fx-background-radius: 8;"/>
     </children>
 </AnchorPane>

@@ -13,6 +13,8 @@ public class StageManager {
 
     private static final Image APP_ICON =
             new Image(StageManager.class.getResourceAsStream("/icons/app_icon.png"));
+    private static final String APP_CSS =
+            StageManager.class.getResource("/css/osis-suite.css").toExternalForm();
 
     private StageManager() {}
 
@@ -39,7 +41,10 @@ public class StageManager {
         Stage newStage = new Stage();
         newStage.setTitle(title);
         newStage.getIcons().add(APP_ICON);
-        newStage.setScene(new Scene(root));
+
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(APP_CSS);
+        newStage.setScene(scene);
 
         if (maximized) {
             newStage.setMaximized(true);
@@ -72,14 +77,18 @@ public class StageManager {
         stage.setTitle(title);
         stage.getIcons().add(APP_ICON);
 
+        Scene scene;
         if (maximized) {
-            stage.setScene(new Scene(root));
+            scene = new Scene(root);
             stage.setMaximized(true);
         } else {
-            stage.setScene(new Scene(root, width, height));
+            scene = new Scene(root, width, height);
         }
 
+        scene.getStylesheets().add(APP_CSS);
+        stage.setScene(scene);
         stage.centerOnScreen();
+
         return stage;
     }
 }

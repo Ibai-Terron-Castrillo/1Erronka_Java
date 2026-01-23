@@ -16,6 +16,8 @@ module org.example._erronka_java {
     requires javafx.base;
     requires java.desktop;
     requires org.apache.pdfbox;
+    requires unirest.java;
+    requires tools.jackson.databind;
 
     opens Pantailak to javafx.fxml;
     opens Klaseak to javafx.base, com.google.gson;

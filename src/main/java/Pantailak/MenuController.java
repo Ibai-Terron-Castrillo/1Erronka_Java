@@ -130,4 +130,17 @@ public class MenuController {
         }
     }
 
+    @FXML
+    private void onMahaiakClick(ActionEvent event) {
+        try {
+            StageManager.switchStage(
+                    getCurrentStage(event),
+                    "mahaiak-view.fxml",
+                    "Mahaiak",
+                    true
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
