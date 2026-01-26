@@ -7,13 +7,9 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import Klaseak.Hornitzailea;
 import Klaseak.Osagaia;
@@ -29,7 +25,6 @@ import java.util.stream.Collectors;
 
 public class HornitzaileakController {
 
-    // Hornitzaileak table
     @FXML private TableView<Hornitzailea> tableHornitzaileak;
     @FXML private TableColumn<Hornitzailea, Integer> colHornitzaileId;
     @FXML private TableColumn<Hornitzailea, String> colHornitzaileIzena;
@@ -39,27 +34,22 @@ public class HornitzaileakController {
     @FXML private TableColumn<Hornitzailea, String> colHornitzaileTelefonoa;
     @FXML private TableColumn<Hornitzailea, String> colHornitzaileEmail;
 
-    // Hornitzailea formularioa
     @FXML private TextField txtIzena, txtCif, txtSektorea, txtTelefonoa, txtEmail, txtHelbidea;
     @FXML private Button btnSaveHornitzailea, btnCancelHornitzailea;
 
-    // Hornitzailearen osagaiak table
     @FXML private TableView<Osagaia> tableHornitzailearenOsagaiak;
     @FXML private TableColumn<Osagaia, String> colOsagaiIzena;
     @FXML private TableColumn<Osagaia, Double> colOsagaiPrezioa;
     @FXML private TableColumn<Osagaia, Integer> colOsagaiStock;
     @FXML private TableColumn<Osagaia, Boolean> colOsagaiEskatu;
 
-    // Osagaiak gehitzeko combo
     @FXML private ComboBox<Osagaia> comboOsagaiak;
     @FXML private Button btnGehituOsagaia, btnKenduOsagaia;
 
-    // Botoiak eta kontrolak
     @FXML private TextField searchField;
     @FXML private ComboBox<String> filterOrdenatu;
     @FXML private Button btnAddHornitzailea, btnDeleteHornitzailea, atzeraBotoia, refreshButton;
 
-    // Estatistikak
     @FXML private Label hornitzaileKopuruaLabel, osagaiKopuruaLabel;
     @FXML private Label totalHornitzaileakLabel, hornitzaileBerriakLabel;
     @FXML private Label osagaiGehienLabel, osagaiGutxienLabel;
@@ -81,16 +71,13 @@ public class HornitzaileakController {
         try {
             LOGGER.info("HornitzaileakController inicializando...");
 
-            // Zerbitzuak hasieratu
             hornitzaileaService = new HornitzaileaService();
             osagaiaService = new OsagaiaService();
 
-            // Listak hasieratu
             hornitzaileakLista = FXCollections.observableArrayList();
             hornitzailearenOsagaiakLista = FXCollections.observableArrayList();
             osagaiakDisponibleLista = FXCollections.observableArrayList();
 
-            // Hornitzaileak table konfiguratu
             colHornitzaileId.setCellValueFactory(new PropertyValueFactory<>("id"));
             colHornitzaileIzena.setCellValueFactory(new PropertyValueFactory<>("izena"));
             colHornitzaileCif.setCellValueFactory(new PropertyValueFactory<>("cif"));
@@ -99,42 +86,33 @@ public class HornitzaileakController {
             colHornitzaileTelefonoa.setCellValueFactory(new PropertyValueFactory<>("telefonoa"));
             colHornitzaileEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
 
-            // Hornitzailearen osagaiak table konfiguratu
             colOsagaiIzena.setCellValueFactory(new PropertyValueFactory<>("izena"));
             colOsagaiPrezioa.setCellValueFactory(new PropertyValueFactory<>("azkenPrezioa"));
             colOsagaiStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
             colOsagaiEskatu.setCellValueFactory(new PropertyValueFactory<>("eskatu"));
 
-            // Combo konfiguratu
             comboOsagaiak.setItems(osagaiakDisponibleLista);
 
-            // Tablak hasieratu
             tableHornitzaileak.setItems(hornitzaileakLista);
             tableHornitzailearenOsagaiak.setItems(hornitzailearenOsagaiakLista);
 
-            // Formularioak konfiguratu
             formularioakKonfiguratu();
 
-            // Filtroak konfiguratu
             filtroakKonfiguratu();
 
-            // Datuak kargatu
             datuakKargatu();
 
-            // Bilaketa konfiguratu
             bilaketaKonfiguratu();
 
-            // Botoiak konfiguratu
             botoiakKonfiguratu();
 
-            // Taula aukerak
             taulaAukerak();
 
-            // Formularioak garbitu
             formularioHornitzaileaGarbitu();
 
-            // Data eta ordua eguneratu
             eguneratuDataOrdua();
+
+            taulakAjustatu();
 
             LOGGER.info("HornitzaileakController inicializado correctamente");
 
@@ -145,7 +123,6 @@ public class HornitzaileakController {
     }
 
     private void formularioakKonfiguratu() {
-        // Hornitzailea formulario botoiak
         btnSaveHornitzailea.setOnAction(e -> {
             try {
                 hornitzaileaGorde();
@@ -159,11 +136,9 @@ public class HornitzaileakController {
     }
 
     private void filtroakKonfiguratu() {
-        // Solo mantener filtro de ordenación
         filterOrdenatu.getItems().addAll("ID", "Izena", "Sektorea", "CIF");
         filterOrdenatu.setValue("ID");
 
-        // Solo el listener de ordenación
         filterOrdenatu.setOnAction(e -> ordenaAplikatu());
     }
 
@@ -176,7 +151,6 @@ public class HornitzaileakController {
     }
 
     private void botoiakKonfiguratu() {
-        // Hornitzaile botoiak
         btnAddHornitzailea.setOnAction(e -> {
             formularioHornitzaileaGarbitu();
             hornitzaileaEditatzen = null;
@@ -191,7 +165,6 @@ public class HornitzaileakController {
             }
         });
 
-        // Osagai botoiak
         btnGehituOsagaia.setOnAction(e -> {
             try {
                 gehituOsagaiaHornitzaileari();
@@ -210,7 +183,6 @@ public class HornitzaileakController {
             }
         });
 
-        // Refresh botoia
         if (refreshButton != null) {
             refreshButton.setOnAction(e -> {
                 try {
@@ -251,7 +223,6 @@ public class HornitzaileakController {
                     }
                 });
 
-        // Hornitzailearen osagaia aukeratzean
         tableHornitzailearenOsagaiak.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldSelection, newSelection) -> {
                     btnKenduOsagaia.setDisable(newSelection == null);
@@ -316,13 +287,10 @@ public class HornitzaileakController {
         try {
             LOGGER.log(Level.INFO, "Kargatzen osagaiak combo-ra ID: {0}", selected.getId());
 
-            // Osagai guztiak kargatu
             List<Osagaia> osagaiak = osagaiaService.getOsagaiak();
 
-            // Hornitzaileak dituen osagaiak lortu
             List<Osagaia> hornitzailearenOsagaiak = hornitzaileaService.getOsagaiakByHornitzailea(selected.getId());
 
-            // Hornitzaileak dituen osagaiak kendu aukeretatik
             osagaiak.removeAll(hornitzailearenOsagaiak);
 
             osagaiakDisponibleLista.setAll(osagaiak);
@@ -355,18 +323,14 @@ public class HornitzaileakController {
 
             tableHornitzaileak.getSelectionModel().clearSelection();
 
-            // Hornitzailearen osagaiak garbitu
             hornitzailearenOsagaiakLista.clear();
 
-            // Combo garbitu
             osagaiakDisponibleLista.clear();
             comboOsagaiak.getSelectionModel().clearSelection();
 
-            // Botoiak desgaitu
             btnGehituOsagaia.setDisable(true);
             btnKenduOsagaia.setDisable(true);
 
-            // Etiketa garbitu
             osagaiKopuruaLabel.setText("0 osagai");
 
             LOGGER.info("Formularioa garbitu da");
@@ -378,7 +342,6 @@ public class HornitzaileakController {
 
     private void hornitzaileaGorde() {
         try {
-            // Balidazioak
             if (txtIzena.getText().isBlank()) {
                 alertaErakutsi("Izena jarri behar da.");
                 return;
@@ -452,7 +415,7 @@ public class HornitzaileakController {
                     (hornitzailea.getEmail() != null && hornitzailea.getEmail().toLowerCase().contains(searchText)) ||
                     (hornitzailea.getHelbidea() != null && hornitzailea.getHelbidea().toLowerCase().contains(searchText));
 
-            return matchesSearch; // Solo filtro por búsqueda
+            return matchesSearch;
         });
 
         hornitzaileKopuruaLabel.setText(filteredHornitzaileak.size() + " hornitzaile");
@@ -523,16 +486,13 @@ public class HornitzaileakController {
             return;
         }
 
-        // Hornitzaile estatistikak
         int totalHornitzaileak = hornitzaileakLista.size();
         totalHornitzaileakLabel.setText(String.valueOf(totalHornitzaileak));
         hornitzaileKopuruaLabel.setText(totalHornitzaileak + " hornitzaile");
 
-        // Azken 7 egunetako hornitzaile berriak (simulatu)
-        int hornitzaileBerriak = 0; // Simulatu
+        int hornitzaileBerriak = 0;
         hornitzaileBerriakLabel.setText(String.valueOf(hornitzaileBerriak));
 
-        // Osagai estatistikak (gehien eta gutxien osagai dituzten hornitzaileak)
         Hornitzailea gehienOsagaiak = null;
         Hornitzailea gutxienOsagaiak = null;
         int maxOsagaiak = -1;
@@ -736,4 +696,94 @@ public class HornitzaileakController {
         }
     }
 
+    private void taulakAjustatu() {
+        try {
+            Platform.runLater(() -> {
+                tableHornitzaileak.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+                tableHornitzailearenOsagaiak.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+                colHornitzaileId.setMinWidth(50);
+                colHornitzaileId.setPrefWidth(50);
+
+                colHornitzaileIzena.setMinWidth(120);
+                colHornitzaileIzena.setPrefWidth(150);
+
+                colHornitzaileCif.setMinWidth(80);
+                colHornitzaileCif.setPrefWidth(100);
+
+                colHornitzaileSektorea.setMinWidth(100);
+                colHornitzaileSektorea.setPrefWidth(120);
+
+                colHornitzaileHelbidea.setMinWidth(150);
+                colHornitzaileHelbidea.setPrefWidth(200);
+
+                colHornitzaileTelefonoa.setMinWidth(90);
+                colHornitzaileTelefonoa.setPrefWidth(110);
+
+                colHornitzaileEmail.setMinWidth(150);
+                colHornitzaileEmail.setPrefWidth(180);
+
+                colOsagaiIzena.setMinWidth(150);
+                colOsagaiIzena.setPrefWidth(200);
+
+                colOsagaiPrezioa.setMinWidth(80);
+                colOsagaiPrezioa.setPrefWidth(100);
+
+                colOsagaiStock.setMinWidth(60);
+                colOsagaiStock.setPrefWidth(80);
+
+                colOsagaiEskatu.setMinWidth(60);
+                colOsagaiEskatu.setPrefWidth(80);
+
+                colHornitzaileIzena.setMaxWidth(Double.MAX_VALUE);
+                colHornitzaileHelbidea.setMaxWidth(Double.MAX_VALUE);
+                colHornitzaileEmail.setMaxWidth(Double.MAX_VALUE);
+                colOsagaiIzena.setMaxWidth(Double.MAX_VALUE);
+
+                LOGGER.info("Taulak ajustatuta");
+            });
+
+            tableHornitzaileak.itemsProperty().addListener((obs, oldVal, newVal) -> {
+                Platform.runLater(() -> {
+                    if (newVal != null && !newVal.isEmpty()) {
+                        zabaleraAjustatu();
+                    }
+                });
+            });
+
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Errorea taulak ajustatzen: " + e.getMessage(), e);
+        }
+    }
+
+    private void zabaleraAjustatu() {
+        try {
+            Platform.runLater(() -> {
+                for (Hornitzailea h : tableHornitzaileak.getItems()) {
+                    if (h.getIzena() != null && h.getIzena().length() > 20) {
+                        colHornitzaileIzena.setPrefWidth(Math.max(colHornitzaileIzena.getPrefWidth(),
+                                h.getIzena().length() * 7));
+                    }
+                    if (h.getHelbidea() != null && h.getHelbidea().length() > 30) {
+                        colHornitzaileHelbidea.setPrefWidth(Math.max(colHornitzaileHelbidea.getPrefWidth(),
+                                h.getHelbidea().length() * 6));
+                    }
+                    if (h.getEmail() != null && h.getEmail().length() > 25) {
+                        colHornitzaileEmail.setPrefWidth(Math.max(colHornitzaileEmail.getPrefWidth(),
+                                h.getEmail().length() * 7));
+                    }
+                }
+
+                for (Osagaia o : tableHornitzailearenOsagaiak.getItems()) {
+                    if (o.getIzena() != null && o.getIzena().length() > 25) {
+                        colOsagaiIzena.setPrefWidth(Math.max(colOsagaiIzena.getPrefWidth(),
+                                o.getIzena().length() * 7));
+                    }
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Errorea zabalerak ajustatzen: " + e.getMessage(), e);
+        }
+    }
 }
