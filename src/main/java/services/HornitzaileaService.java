@@ -17,7 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class HornitzaileaService {
-    private static final String API_URL = "http://localhost:5000/api/Hornitzaileak";
+    private static final String API_URL = "http://192.168.2.101:5000/api/Hornitzaileak";
     private final HttpClient client;
     private final Gson gson;
     private static final Logger LOGGER = Logger.getLogger(HornitzaileaService.class.getName());

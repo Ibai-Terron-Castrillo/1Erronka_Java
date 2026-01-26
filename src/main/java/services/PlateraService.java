@@ -16,7 +16,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 public class PlateraService {
-    private final String baseUrl = "http://localhost:5000/api";
+    private final String baseUrl = "http://192.168.2.101:5000/api";
     private final HttpClient httpClient = HttpClient.newHttpClient();
     private final Gson gson;
 
