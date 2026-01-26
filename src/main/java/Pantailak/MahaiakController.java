@@ -675,14 +675,12 @@ public class MahaiakController {
             this.egoera = new SimpleStringProperty(okupatuta ? "Okupatuta" : "Libre");
         }
 
-        // Getters
         public int getId() { return id.get(); }
         public int getZenbakia() { return zenbakia.get(); }
         public int getPertsonaMax() { return pertsonaMax.get(); }
         public String getEgoera() { return egoera.get(); }
         public boolean isOkupatuta() { return okupatuta.get(); }
 
-        // Setters
         public void setId(int id) { this.id.set(id); }
         public void setZenbakia(int zenbakia) { this.zenbakia.set(zenbakia); }
         public void setPertsonaMax(int pertsonaMax) { this.pertsonaMax.set(pertsonaMax); }
@@ -691,7 +689,6 @@ public class MahaiakController {
             this.egoera.set(okupatuta ? "Okupatuta" : "Libre");
         }
 
-        // Property getters
         public SimpleIntegerProperty idProperty() { return id; }
         public SimpleIntegerProperty zenbakiaProperty() { return zenbakia; }
         public SimpleIntegerProperty pertsonaMaxProperty() { return pertsonaMax; }
