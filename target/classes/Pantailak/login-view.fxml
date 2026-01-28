@@ -7,7 +7,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.layout.HBox?>
 <AnchorPane
         xmlns="http://javafx.com/javafx/25"
@@ -46,8 +45,7 @@
                         -fx-border-radius: 8;
                         -fx-border-color: #72226B;
                         -fx-border-width: 1.5;
-                        -fx-focus-color: #F28A2E;"
-                />
+                        -fx-focus-color: #F28A2E;" />
 
                 <PasswordField
                         fx:id="pasahitza"
@@ -58,8 +56,7 @@
                         -fx-border-radius: 8;
                         -fx-border-color: #72226B;
                         -fx-border-width: 1.5;
-                        -fx-focus-color: #F28A2E;"
-                />
+                        -fx-focus-color: #F28A2E;" />
 
                 <HBox spacing="20" alignment="CENTER">
                     <children>
@@ -79,6 +76,7 @@
                                 fx:id="sartu"
                                 text="Sartu"
                                 prefWidth="100"
+                                defaultButton="true"
                                 style="
                                     -fx-background-color: #F28A2E;
                                     -fx-text-fill: white;

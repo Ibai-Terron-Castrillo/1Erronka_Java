@@ -3,13 +3,8 @@ package Pantailak;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 
@@ -19,11 +14,7 @@ import java.util.Optional;
 public class MenuController {
 
     @FXML
-    private Button atzeraBotoia;
-
-    @FXML
     private void saioaItxi(ActionEvent event) {
-
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Saioa itxi");
         alert.setHeaderText("Ziur zaude saioa itxi nahi duzula?");
@@ -33,8 +24,10 @@ public class MenuController {
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
-                Stage currentStage =
-                        (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                // ✅ NUEVO: Ocultar botón flotante al cerrar sesión
+                StageManager.hideFloatingChatButton();
 
                 StageManager.switchToLogin(currentStage);
 
@@ -43,7 +36,6 @@ public class MenuController {
             }
         }
     }
-
 
     private void erroreaErakutsi(String mezua) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -67,10 +59,10 @@ public class MenuController {
                     true
             );
         } catch (IOException e) {
+            erroreaErakutsi("Errorea langileak kargatzean: " + e.getMessage());
             e.printStackTrace();
         }
     }
-
 
     @FXML
     private void onOsagaiakClick(ActionEvent event) {
@@ -82,10 +74,10 @@ public class MenuController {
                     true
             );
         } catch (IOException e) {
+            erroreaErakutsi("Errorea osagaiak kargatzean: " + e.getMessage());
             e.printStackTrace();
         }
     }
-
 
     @FXML
     private void onEskaerakClick(ActionEvent event) {
@@ -97,10 +89,10 @@ public class MenuController {
                     true
             );
         } catch (IOException e) {
+            erroreaErakutsi("Errorea eskaerak kargatzean: " + e.getMessage());
             e.printStackTrace();
         }
     }
-
 
     @FXML
     private void onHornitzaileakClick(ActionEvent event) {
@@ -112,6 +104,7 @@ public class MenuController {
                     true
             );
         } catch (IOException e) {
+            erroreaErakutsi("Errorea hornitzaileak kargatzean: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -126,6 +119,7 @@ public class MenuController {
                     true
             );
         } catch (IOException e) {
+            erroreaErakutsi("Errorea platerak kargatzean: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -140,6 +134,7 @@ public class MenuController {
                     true
             );
         } catch (IOException e) {
+            erroreaErakutsi("Errorea mahaiak kargatzean: " + e.getMessage());
             e.printStackTrace();
         }
     }
