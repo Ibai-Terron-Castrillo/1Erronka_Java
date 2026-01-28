@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import Klaseak.Erabiltzailea;
 import Klaseak.Langilea;
 import Klaseak.Lanpostua;
+import services.ActionLogger;
 import services.ErabiltzaileaService;
 import services.LangileaService;
 
@@ -247,11 +248,30 @@ public class LangileakController {
         langilea.setTelefonoa(txtTelefonoa.getText());
         langilea.setLanpostua(comboLanpostu.getValue());
 
+        String izenaLog = txtIzena.getText();
+        String abizenaLog = txtAbizena1.getText();
+
         if (langileaEditatzen == null) {
             langilea = LangileaService.create(langilea);
+
+            ActionLogger.log(
+                    loadedErabiltzailea != null ? loadedErabiltzailea.getIzena() : "ADMIN",
+                    "INSERT",
+                    "langileak",
+                    "Langilea sortu: " + izenaLog + " " + abizenaLog
+            );
+
         } else {
             LangileaService.update(langilea);
+
+            ActionLogger.log(
+                    loadedErabiltzailea != null ? loadedErabiltzailea.getIzena() : "ADMIN",
+                    "UPDATE",
+                    "langileak",
+                    "Langilea eguneratu (ID=" + langilea.getId() + ")"
+            );
         }
+
 
         if (checkErabiltzaile.isSelected()) {
             Erabiltzailea erabiltzailea = loadedErabiltzailea;
@@ -265,9 +285,23 @@ public class LangileakController {
             erabiltzailea.setPasahitza(txtPass.getText());
 
             ErabiltzaileaService.saveOrUpdate(erabiltzailea);
+            ActionLogger.log(
+                    erabiltzailea.getIzena(),
+                    loadedErabiltzailea == null ? "INSERT" : "UPDATE",
+                    "erabiltzaileak",
+                    "Erabiltzailea lotu langileari (Langile ID=" + langilea.getId() + ")"
+            );
+
         } else {
             if (loadedErabiltzailea != null) {
                 ErabiltzaileaService.delete(loadedErabiltzailea.getId());
+                ActionLogger.log(
+                        loadedErabiltzailea.getIzena(),
+                        "DELETE",
+                        "erabiltzaileak",
+                        "Erabiltzailea ezabatua (ID=" + loadedErabiltzailea.getId() + ")"
+                );
+
             }
         }
 
@@ -391,6 +425,13 @@ public class LangileakController {
 
         if (result.isPresent() && result.get() == bai) {
             LangileaService.deleteLangile(selected.getId());
+            ActionLogger.log(
+                    loadedErabiltzailea != null ? loadedErabiltzailea.getIzena() : "ADMIN",
+                    "DELETE",
+                    "langileak",
+                    "Langilea ezabatua: " + selected.getIzena() + " " + selected.getAbizena1()
+            );
+
             taulaBirkargatu();
             formularioaGarbitu();
         }

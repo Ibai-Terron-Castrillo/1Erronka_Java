@@ -74,9 +74,6 @@ public class PDFSortzailea {
         }
     }
 
-    /**
-     * Bukatutako eskaerarako PDF - Diseño profesional
-     */
     private static File sortuBukatutakoEskaeraPdf(PDDocument dokumentua, Eskaera eskaera,
                                                   List<EskaeraOsagaia> osagaiak) throws IOException {
         PDPage orria = new PDPage(PDRectangle.A4);
@@ -99,9 +96,6 @@ public class PDFSortzailea {
         return gordePdf(dokumentua, pdfIzena);
     }
 
-    /**
-     * Pendiente eskaerarako PDF - Diseño profesional
-     */
     private static File sortuPendienteEskaeraPdf(PDDocument dokumentua, Eskaera eskaera,
                                                  List<EskaeraOsagaia> osagaiak) throws IOException {
         PDPage orria = new PDPage(PDRectangle.A4);
