@@ -8,9 +8,7 @@ public class ErabiltzaileaService {
 
     private static final Gson gson = new Gson();
 
-    // -------------------------------------------------------
     // GET by langileId
-    // -------------------------------------------------------
     public static Erabiltzailea getByLangile(int langileId) {
         try {
             var res = ApiClient.get("/api/erabiltzailea/langile/" + langileId);
@@ -25,9 +23,7 @@ public class ErabiltzaileaService {
         }
     }
 
-    // -------------------------------------------------------
-    // CREATE or UPDATE
-    // -------------------------------------------------------
+    // CREATE / UPDATE
     public static boolean saveOrUpdate(Erabiltzailea e) {
         try {
             var json = gson.toJson(e);
@@ -49,9 +45,7 @@ public class ErabiltzaileaService {
         }
     }
 
-    // -------------------------------------------------------
     // DELETE by erabiltzailea.id
-    // -------------------------------------------------------
     public static boolean delete(int erabiltzaileaId) {
         try {
             ApiClient.delete("/api/erabiltzailea/" + erabiltzaileaId);

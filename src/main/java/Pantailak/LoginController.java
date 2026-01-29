@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import services.LoginService;
-
+import services.SessionContext;
 import java.io.IOException;
 
 public class LoginController {
@@ -28,9 +28,9 @@ public class LoginController {
         String result = LoginService.login(user, pass);
 
         if ("OK".equals(result)) {
+            SessionContext.setCurrentUser(user);
             StageManager.hideFloatingChatButton();
 
-            
             Platform.runLater(() -> {
                 StageManager.showFloatingChatButton(user);
                 menuNagusiaIreki();
@@ -81,6 +81,7 @@ public class LoginController {
     @FXML
     protected void irten() {
         StageManager.hideFloatingChatButton();
+        SessionContext.clear();
         Platform.exit();
         System.exit(0);
     }

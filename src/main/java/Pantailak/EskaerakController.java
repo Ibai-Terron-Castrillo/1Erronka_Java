@@ -2,14 +2,9 @@ package Pantailak;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import services.EskaeraService;
-import services.OsagaiaService;
-import services.PDFSortzailea;
+import services.*;
 import Klaseak.Eskaera;
 import Klaseak.EskaeraOsagaia;
 import Klaseak.Osagaia;
@@ -77,23 +72,22 @@ public class EskaerakController {
 
     @FXML
     public void initialize() {
-        setupTables();
-        setupFilters();
-        loadData();
+        taulaPrestatu();
+        filtroakEzarri();
+        datuakKargatu();
         setupEventHandlers();
-        ensurePriceFieldIsEditable();
+        prezioaEditableaZiurtatu();
     }
 
-    private void ensurePriceFieldIsEditable() {
-        // Asegurar que el campo de precio sea editable
+    private void prezioaEditableaZiurtatu() {
+        
         prezioaField.setEditable(true);
         prezioaField.setDisable(false);
 
-        // Añadir estilo para indicar que es editable
         prezioaField.setStyle("-fx-background-color: white; -fx-border-color: #cccccc;");
     }
 
-    private void setupTables() {
+    private void taulaPrestatu() {
         zenbakiaColumn.setCellValueFactory(new PropertyValueFactory<>("eskaeraZenbakia"));
 
         dataColumn.setCellValueFactory(cellData -> {
@@ -246,13 +240,13 @@ public class EskaerakController {
         eskaeraOsagaiakTable.setItems(eskaeraOsagaiakList);
     }
 
-    private void setupFilters() {
+    private void filtroakEzarri() {
         filterCombo.getItems().addAll("Guztiak", "Pendienteak", "Bukatuak");
         filterCombo.setValue("Guztiak");
-        filterCombo.valueProperty().addListener((obs, oldVal, newVal) -> applyFilter(newVal));
+        filterCombo.valueProperty().addListener((obs, oldVal, newVal) -> filtroaAplikatu(newVal));
     }
 
-    private void applyFilter(String filter) {
+    private void filtroaAplikatu(String filter) {
         if (filter.equals("Guztiak")) {
             loadEskaerak();
         } else if (filter.equals("Pendienteak")) {
@@ -262,7 +256,7 @@ public class EskaerakController {
         }
     }
 
-    private void loadData() {
+    private void datuakKargatu() {
         loadNextEskaeraZenbakia();
         loadOsagaiak();
         loadEskaerak();
@@ -322,13 +316,12 @@ public class EskaerakController {
     }
 
     private void setupEventHandlers() {
-        refreshButton.setOnAction(event -> loadData());
+        refreshButton.setOnAction(event -> datuakKargatu());
 
         osagaiaCombo.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 currentSelectedOsagaia = newVal;
 
-                // Solo establecer el precio automáticamente si el usuario no lo ha editado
                 if (!userEditedPrice || prezioaField.getText().isEmpty()) {
                     prezioaField.setText(decimalFormat.format(newVal.getAzkenPrezioa()));
                     userEditedPrice = false;
@@ -338,7 +331,7 @@ public class EskaerakController {
             }
         });
 
-        // Detectar cuando el usuario empieza a editar el precio
+        
         prezioaField.textProperty().addListener((obs, oldVal, newVal) -> {
             if (currentSelectedOsagaia != null && !newVal.isEmpty()) {
                 String defaultPrice = decimalFormat.format(currentSelectedOsagaia.getAzkenPrezioa());
@@ -348,15 +341,15 @@ public class EskaerakController {
             }
         });
 
-        // Hacer que sea fácil editar el precio
+        
         prezioaField.setOnMouseClicked(event -> {
-            // Seleccionar todo el texto cuando se hace clic para facilitar la edición
+            
             Platform.runLater(() -> {
                 prezioaField.selectAll();
             });
         });
 
-        // También permitir edición con teclado
+        
         prezioaField.setOnKeyPressed(event -> {
             userEditedPrice = true;
         });
@@ -372,7 +365,6 @@ public class EskaerakController {
         garbituButton.setOnAction(event -> handleGarbitu());
         sortuButton.setOnAction(event -> handleSortuEskaera());
 
-        // Botón para resetear el precio al valor por defecto
         prezioaField.setOnContextMenuRequested(event -> {
             ContextMenu contextMenu = new ContextMenu();
 
@@ -440,11 +432,11 @@ public class EskaerakController {
                 return;
             }
 
-            // Permitir cambio de precio con confirmación solo si hay un cambio muy grande
+            
             if (azkenPrezioa > 0) {
                 double aldaketa = Math.abs((prezioa - azkenPrezioa) / azkenPrezioa) * 100;
 
-                // Cambiado de 50% a 200% para hacerlo más permisivo
+                
                 if (aldaketa > 200) {
                     Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
                     confirm.setTitle("Prezio aldaketa handia");
@@ -477,7 +469,7 @@ public class EskaerakController {
             kopuruaField.clear();
             prezioaField.clear();
 
-            // Limpiar también la selección del combo para permitir nueva selección
+            
             osagaiaCombo.getSelectionModel().clearSelection();
             currentSelectedOsagaia = null;
             userEditedPrice = false;
@@ -557,6 +549,12 @@ public class EskaerakController {
                                     Platform.runLater(() -> {
                                         if (finalAllAdded) {
                                             String mezua = "Eskaera ondo sortu da!";
+                                            ActionLogger.log(
+                                                    SessionContext.getCurrentUser(),
+                                                    "INSERT",
+                                                    "eskaerak",
+                                                    "Eskaera sortu: #" + eskaeraZenbakia + " | Guztira: " + decimalFormat.format(guztira) + " €"
+                                            );
 
                                             if (finalPdfFitxategia != null && finalPdfFitxategia.exists()) {
                                                 mezua += "\nPDF fitxategia: " + finalPdfFitxategia.getName();
@@ -607,9 +605,6 @@ public class EskaerakController {
         }
     }
 
-    /**
-     * Eskaera baten PDF berria sortu
-     */
     private void handleSortuPdfEskaerarako(Eskaera eskaera) {
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("PDF sortu");
@@ -624,6 +619,15 @@ public class EskaerakController {
 
                     Platform.runLater(() -> {
                         if (pdfFitxategia != null && pdfFitxategia.exists()) {
+
+                            ActionLogger.log(
+                                    SessionContext.getCurrentUser(),
+                                    "PDF",
+                                    "eskaerak",
+                                    "PDF sortua eskaerarentzat: #" + eskaera.getEskaeraZenbakia()
+                            );
+
+
                             String mezua = "PDF fitxategia ondo sortu da!\n";
                             mezua += "Izena: " + pdfFitxategia.getName() + "\n";
                             mezua += "Kokapena: " + pdfFitxategia.getParent();
@@ -730,6 +734,13 @@ public class EskaerakController {
                 boolean success = EskaeraService.markAsCompleted(eskaera.getId());
 
                 if (success) {
+                    ActionLogger.log(
+                            SessionContext.getCurrentUser(),
+                            "UPDATE",
+                            "eskaerak",
+                            "Eskaera bukatu: #" + eskaera.getEskaeraZenbakia()
+                    );
+
                     List<EskaeraOsagaia> osagaiak = EskaeraService.getEskaeraOsagaiak(eskaera.getId());
                     Eskaera eguneratutakoEskaera = EskaeraService.getEskaeraById(eskaera.getId());
 
@@ -774,6 +785,13 @@ public class EskaerakController {
                 boolean success = EskaeraService.deleteEskaera(selected.getId());
                 Platform.runLater(() -> {
                     if (success) {
+                        ActionLogger.log(
+                                SessionContext.getCurrentUser(),
+                                "DELETE",
+                                "eskaerak",
+                                "Eskaera ezabatuta: #" + selected.getEskaeraZenbakia()
+                        );
+
                         alertaErakutsi("Arrakasta", "Eskaera ondo ezabatuta!", Alert.AlertType.INFORMATION);
                         loadEskaerak();
                     } else {

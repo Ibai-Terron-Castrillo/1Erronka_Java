@@ -13,8 +13,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import Klaseak.Hornitzailea;
 import Klaseak.Osagaia;
+import services.ActionLogger;
 import services.HornitzaileaService;
 import services.OsagaiaService;
+import services.SessionContext;
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -386,6 +388,24 @@ public class HornitzaileakController {
             }
 
             if (success) {
+                String erabiltzailea = SessionContext.getCurrentUser();
+
+                if (hornitzaileaEditatzen == null) {
+                    ActionLogger.log(
+                            erabiltzailea,
+                            "INSERT",
+                            "hornitzaileak",
+                            "Hornitzailea sortu: " + hornitzailea.getIzena() + " (CIF=" + hornitzailea.getCif() + ")"
+                    );
+                } else {
+                    ActionLogger.log(
+                            erabiltzailea,
+                            "UPDATE",
+                            "hornitzaileak",
+                            "Hornitzailea eguneratu: ID=" + hornitzailea.getId()
+                    );
+                }
+
                 datuakKargatu();
                 formularioHornitzaileaGarbitu();
                 eguneratuDataOrdua();
@@ -553,6 +573,13 @@ public class HornitzaileakController {
                 LOGGER.log(Level.INFO, "Hornitzailea ezabatzen ID: {0}", selected.getId());
                 boolean success = hornitzaileaService.deleteHornitzailea(selected.getId());
                 if (success) {
+                    ActionLogger.log(
+                            SessionContext.getCurrentUser(),
+                            "DELETE",
+                            "hornitzaileak",
+                            "Hornitzailea ezabatuta: " + selected.getIzena() + " (ID=" + selected.getId() + ")"
+                    );
+
                     datuakKargatu();
                     formularioHornitzaileaGarbitu();
                     arrakastaErakutsi("Hornitzailea ondo ezabatu da.");
@@ -583,6 +610,14 @@ public class HornitzaileakController {
                     hornitzailea.getId(), osagaia.getId());
 
             if (success) {
+                ActionLogger.log(
+                        SessionContext.getCurrentUser(),
+                        "INSERT",
+                        "hornitzailea_osagaiak",
+                        "Osagaia gehituta: " + osagaia.getIzena() +
+                                " -> Hornitzailea: " + hornitzailea.getIzena()
+                );
+
                 kargatuHornitzailearenOsagaiak(hornitzailea.getId());
                 kargatuOsagaiakCombo();
                 arrakastaErakutsi("Osagaia hornitzaileari gehitu zaio.");
@@ -625,6 +660,14 @@ public class HornitzaileakController {
                         hornitzailea.getId(), osagaia.getId());
 
                 if (success) {
+                    ActionLogger.log(
+                            SessionContext.getCurrentUser() ,
+                            "DELETE",
+                            "hornitzailea_osagaiak",
+                            "Osagaia kenduta: " + osagaia.getIzena() +
+                                    " <- Hornitzailea: " + hornitzailea.getIzena()
+                    );
+
                     kargatuHornitzailearenOsagaiak(hornitzailea.getId());
                     kargatuOsagaiakCombo();
                     arrakastaErakutsi("Osagaia hornitzaileatik kendu da.");

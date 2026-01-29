@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import services.ActionLogger;
 import services.OsagaiaService;
 import Klaseak.Osagaia;
 import javafx.collections.FXCollections;
@@ -16,6 +17,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import services.SessionContext;
 
 import java.io.IOException;
 import java.util.List;
@@ -243,18 +245,37 @@ public class OsagaiakController {
                 osagaia.setEskatu(eskatuCheckBox.isSelected());
             }
 
+            boolean isUpdate = selected != null;
+            String izenaLog = izenaField.getText();
+            double prezioaLog = Double.parseDouble(prezioaTexto);
+            int stockLog = Integer.parseInt(stockTexto);
+
             new Thread(() -> {
                 boolean success = selected != null ?
                         OsagaiaService.updateOsagaia(osagaia) :
                         OsagaiaService.createOsagaia(osagaia);
                 javafx.application.Platform.runLater(() -> {
                     if (success) {
+                        ActionLogger.log(
+                                SessionContext.getCurrentUser(),
+                                isUpdate ? "UPDATE" : "INSERT",
+                                "osagaiak",
+                                (isUpdate
+                                        ? "Osagaia eguneratu: "
+                                        : "Osagaia sortu: ")
+                                        + izenaLog
+                                        + " | Prezioa=" + prezioaLog
+                                        + " | Stock=" + stockLog
+                        );
+
                         showAlert("Arrakasta", "Osagaia ondo gordeta", Alert.AlertType.INFORMATION);
                         loadOsagaiak();
                         clearForm();
+
                     } else {
                         showAlert("Errorea", "Ezin izan da osagaia gorde", Alert.AlertType.ERROR);
                     }
+
                 });
             }).start();
         } catch (NumberFormatException e) {
@@ -274,10 +295,18 @@ public class OsagaiakController {
         confirm.setHeaderText("Osagaia ezabatu");
         confirm.setContentText("Ziur zaude '" + selected.getIzena() + "' osagaia ezabatu nahi duzula?");
         if (confirm.showAndWait().get() == ButtonType.OK) {
+            String izenaLog = selected.getIzena();
+            int idLog = selected.getId();
             new Thread(() -> {
                 boolean success = OsagaiaService.deleteOsagaia(selected.getId());
                 javafx.application.Platform.runLater(() -> {
                     if (success) {
+                        ActionLogger.log(
+                                SessionContext.getCurrentUser(),
+                                "DELETE",
+                                "osagaiak",
+                                "Osagaia ezabatua: " + izenaLog + " (ID=" + idLog + ")"
+                        );
                         showAlert("Arrakasta", "Osagaia ondo ezabatuta", Alert.AlertType.INFORMATION);
                         loadOsagaiak();
                         clearForm();
@@ -307,6 +336,12 @@ public class OsagaiakController {
                     boolean success = OsagaiaService.updateStock(selected.getId(), kopurua);
                     javafx.application.Platform.runLater(() -> {
                         if (success) {
+                            ActionLogger.log(
+                                    SessionContext.getCurrentUser(),
+                                    "UPDATE",
+                                    "osagaiak",
+                                    "Stock gehitua: " + selected.getIzena() + " +" + kopurua
+                            );
                             loadOsagaiak();
                             showAlert("Arrakasta", "Stock ondo eguneratuta", Alert.AlertType.INFORMATION);
                         } else {
@@ -338,6 +373,12 @@ public class OsagaiakController {
                     boolean success = OsagaiaService.updateStock(selected.getId(), kopurua);
                     javafx.application.Platform.runLater(() -> {
                         if (success) {
+                            ActionLogger.log(
+                                    SessionContext.getCurrentUser(),
+                                    "UPDATE",
+                                    "osagaiak",
+                                    "Stock kendua: " + selected.getIzena() + " " + kopurua
+                            );
                             loadOsagaiak();
                             showAlert("Arrakasta", "Stock ondo eguneratuta", Alert.AlertType.INFORMATION);
                         } else {
@@ -363,6 +404,12 @@ public class OsagaiakController {
             boolean success = OsagaiaService.toggleEskatu(selected.getId());
             javafx.application.Platform.runLater(() -> {
                 if (success) {
+                    ActionLogger.log(
+                            SessionContext.getCurrentUser(),
+                            "UPDATE",
+                            "osagaiak",
+                            "Eskatu egoera aldatu: " + selected.getIzena()
+                    );
                     showAlert("Arrakasta", "Eskatu egoera aldatu da", Alert.AlertType.INFORMATION);
                     loadOsagaiak();
                 } else {

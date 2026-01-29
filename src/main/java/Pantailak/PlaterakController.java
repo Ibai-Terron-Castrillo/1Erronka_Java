@@ -3,9 +3,7 @@ package Pantailak;
 import Klaseak.Platera;
 import Klaseak.Osagaia;
 import Klaseak.Kategoria;
-import services.PlateraService;
-import services.OsagaiaService;
-import services.KategoriaService;
+import services.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -246,6 +244,15 @@ public class PlaterakController {
                         .thenAccept(arrakasta -> {
                             Platform.runLater(() -> {
                                 if (arrakasta) {
+                                    ActionLogger.log(
+                                            SessionContext.getCurrentUser(),
+                                            "UPDATE",
+                                            "platerak",
+                                            "Stock aldaketa: " + platerEditatzen.getIzena() +
+                                                    " | " + (stockBerria - stockOriginal) +
+                                                    " (berria=" + stockBerria + ")"
+                                    );
+
                                     platerEditatzen.setStock(stockBerria);
                                     stockOriginal = stockBerria;
 
@@ -477,7 +484,7 @@ public class PlaterakController {
 
         stockOriginal = 0;
     }
-
+    /*
     @FXML
     private void kategoriaBerriaSortu() {
         TextInputDialog dialog = new TextInputDialog();
@@ -493,6 +500,13 @@ public class PlaterakController {
                         .thenAccept(kategoriaSortua -> {
                             Platform.runLater(() -> {
                                 if (kategoriaSortua != null) {
+                                    ActionLogger.log(
+                                            SessionContext.getCurrentUser(),
+                                            "INSERT",
+                                            "kategoriak",
+                                            "Kategoria sortu: " + kategoriaSortua.getIzena()
+                                    );
+
                                     kategoriakList.add(kategoriaSortua);
                                     cmbKategoriak.getSelectionModel().select(kategoriaSortua);
                                     erakutsiMezua("Arrakasta", "Kategoria ondo sortu da", "SUCCESS");
@@ -503,7 +517,7 @@ public class PlaterakController {
                         });
             }
         });
-    }
+    }*/
 
     @FXML
     private void gordePlaterra() {
@@ -543,6 +557,15 @@ public class PlaterakController {
                     .thenAccept(gordetakoPlater -> {
                         Platform.runLater(() -> {
                             if (gordetakoPlater != null) {
+                                ActionLogger.log(
+                                        SessionContext.getCurrentUser(),
+                                        "INSERT",
+                                        "platerak",
+                                        "Platerra sortu: " + gordetakoPlater.getIzena() +
+                                                " | Kategoria=" + hautatutakoKategoria.getIzena() +
+                                                " | Osagaiak=" + osagaiakKopiatu.size()
+                                );
+
                                 platerakList.add(gordetakoPlater);
                                 garbituFormularioa();
                                 erakutsiMezua("Arrakasta",
@@ -619,6 +642,15 @@ public class PlaterakController {
                     .thenAccept(arrakasta -> {
                         Platform.runLater(() -> {
                             if (arrakasta) {
+                                ActionLogger.log(
+                                        SessionContext.getCurrentUser(),
+                                        "UPDATE",
+                                        "platerak",
+                                        "Platerra eguneratu: ID=" + platerEditatzen.getId() +
+                                                " | Izena=" + platerEditatzen.getIzena() +
+                                                " | Osagaiak=" + osagaiakKopiatu.size()
+                                );
+
                                 // Lista lokalak eguneratu
                                 int index = platerakList.indexOf(platerEditatzen);
                                 if (index >= 0) {
@@ -675,6 +707,14 @@ public class PlaterakController {
                     .thenAccept(arrakasta -> {
                         Platform.runLater(() -> {
                             if (arrakasta) {
+                                ActionLogger.log(
+                                        SessionContext.getCurrentUser(),
+                                        "DELETE",
+                                        "platerak",
+                                        "Platerra ezabatuta: " + hautatuta.getIzena() +
+                                                " (ID=" + hautatuta.getId() + ")"
+                                );
+
                                 platerakList.remove(hautatuta);
                                 if (platerEditatzen != null && platerEditatzen.getId() == hautatuta.getId()) {
                                     garbituFormularioa();
@@ -728,6 +768,15 @@ public class PlaterakController {
             );
 
             platerOsagaiakList.add(osagaiaBerria);
+            ActionLogger.log(
+                    SessionContext.getCurrentUser(),
+                    "INSERT",
+                    "platera_osagaiak",
+                    "Osagaia gehitua: " + hautatutakoOsagaia.getIzena() +
+                            " | Platerra=" + (platerEditatzen != null ? platerEditatzen.getIzena() : "PLATER BERRIA") +
+                            " | Kopurua=" + kopurua
+            );
+
             tblOsagaiak.refresh();
             eguneratuKostuTotala();
 
@@ -742,6 +791,14 @@ public class PlaterakController {
     private void ezabatuOsagaia() {
         OsagaiakTableModel hautatutakoOsagaia = tblOsagaiak.getSelectionModel().getSelectedItem();
         if (hautatutakoOsagaia != null) {
+            ActionLogger.log(
+                    SessionContext.getCurrentUser(),
+                    "DELETE",
+                    "platera_osagaiak",
+                    "Osagaia kenduta: " + hautatutakoOsagaia.getIzena() +
+                            " | Platerra=" + (platerEditatzen != null ? platerEditatzen.getIzena() : "PLATER BERRIA")
+            );
+
             platerOsagaiakList.remove(hautatutakoOsagaia);
             tblOsagaiak.refresh();
             eguneratuKostuTotala();

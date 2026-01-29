@@ -15,10 +15,10 @@ public class ActionLogger {
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public static synchronized void log(
-            String usuario,
-            String accion,
-            String tabla,
-            String descripcion
+            String erabiltzailea,
+            String eragiketa,
+            String taula,
+            String deskripzioa
     ) {
         try {
             String rutaRed = "\\\\" + SERVER_IP + "\\" + SERVER_SHARE;
@@ -29,10 +29,10 @@ public class ActionLogger {
             String linea = String.format(
                     "[%s] ERABILTZAILEA=%s | ERAGIKETA=%s | TAULA=%s | %s%n",
                     LocalDateTime.now().format(FORMAT),
-                    usuario,
-                    accion,
-                    tabla,
-                    descripcion
+                    erabiltzailea,
+                    eragiketa,
+                    taula,
+                    deskripzioa
             );
 
             Files.write(

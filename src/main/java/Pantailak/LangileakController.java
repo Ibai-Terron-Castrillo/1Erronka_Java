@@ -21,6 +21,7 @@ import Klaseak.Lanpostua;
 import services.ActionLogger;
 import services.ErabiltzaileaService;
 import services.LangileaService;
+import services.SessionContext;
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -255,7 +256,7 @@ public class LangileakController {
             langilea = LangileaService.create(langilea);
 
             ActionLogger.log(
-                    loadedErabiltzailea != null ? loadedErabiltzailea.getIzena() : "ADMIN",
+                    SessionContext.getCurrentUser(),
                     "INSERT",
                     "langileak",
                     "Langilea sortu: " + izenaLog + " " + abizenaLog
@@ -265,7 +266,7 @@ public class LangileakController {
             LangileaService.update(langilea);
 
             ActionLogger.log(
-                    loadedErabiltzailea != null ? loadedErabiltzailea.getIzena() : "ADMIN",
+                    SessionContext.getCurrentUser(),
                     "UPDATE",
                     "langileak",
                     "Langilea eguneratu (ID=" + langilea.getId() + ")"
@@ -426,7 +427,7 @@ public class LangileakController {
         if (result.isPresent() && result.get() == bai) {
             LangileaService.deleteLangile(selected.getId());
             ActionLogger.log(
-                    loadedErabiltzailea != null ? loadedErabiltzailea.getIzena() : "ADMIN",
+                    SessionContext.getCurrentUser(),
                     "DELETE",
                     "langileak",
                     "Langilea ezabatua: " + selected.getIzena() + " " + selected.getAbizena1()

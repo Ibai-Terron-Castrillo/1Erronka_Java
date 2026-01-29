@@ -166,12 +166,12 @@
                             <ComboBox fx:id="cmbKategoriak" promptText="Aukeratu kategoria"
                                       prefWidth="180"
                                       style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-padding: 8;"/>
-                            <Button fx:id="btnKategoriaBerria" text="+" onAction="#kategoriaBerriaSortu"
+                            <!-- <Button fx:id="btnKategoriaBerria" text="+" onAction="#kategoriaBerriaSortu"
                                     style="-fx-background-color: #38a169; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand; -fx-padding: 8 12;">
                                 <tooltip>
                                     <Tooltip text="Kategoria berria sortu" />
                                 </tooltip>
-                            </Button>
+                            </Button>-->
                         </HBox>
                     </GridPane>
 

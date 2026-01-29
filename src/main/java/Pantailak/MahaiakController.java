@@ -14,22 +14,8 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TableColumn;
-import javafx.scene.layout.HBox;
-import javafx.geometry.Pos;
-import Klaseak.Mahaia;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
-import kong.unirest.HttpResponse;
-import kong.unirest.JsonNode;
-import kong.unirest.Unirest;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import services.SessionContext;
+import services.ActionLogger;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -377,6 +363,14 @@ public class MahaiakController {
                     .thenAccept(gordetakoMahaia -> {
                         Platform.runLater(() -> {
                             if (gordetakoMahaia != null) {
+                                ActionLogger.log(
+                                        SessionContext.getCurrentUser(),
+                                        "INSERT",
+                                        "mahaiak",
+                                        "Mahaia sortu: Zenbakia=" + gordetakoMahaia.getZenbakia() +
+                                                ", PertsonaMax=" + gordetakoMahaia.getPertsonaMax()
+                                );
+
                                 mahaiakList.add(new MahaiaTableModel(
                                         gordetakoMahaia.getId(),
                                         gordetakoMahaia.getZenbakia(),
@@ -421,6 +415,15 @@ public class MahaiakController {
                     .thenAccept(arrakasta -> {
                         Platform.runLater(() -> {
                             if (arrakasta) {
+                                ActionLogger.log(
+                                        SessionContext.getCurrentUser(),
+                                        "UPDATE",
+                                        "mahaiak",
+                                        "Mahaia eguneratu (ID=" + mahaiEditatzen.getId() +
+                                                ", Zenbakia=" + mahaiEditatzen.getZenbakia() +
+                                                ", PertsonaMax=" + mahaiEditatzen.getPertsonaMax() + ")"
+                                );
+
                                 mahaiEditatzen.setZenbakia(Integer.parseInt(txtZenbakia.getText()));
                                 mahaiEditatzen.setPertsonaMax(cmbPertsonaMax.getValue());
 
@@ -477,6 +480,14 @@ public class MahaiakController {
                         Platform.runLater(() -> {
 
                             if (arrakasta) {
+                                ActionLogger.log(
+                                        SessionContext.getCurrentUser(),
+                                        "DELETE",
+                                        "mahaiak",
+                                        "Mahaia ezabatu (ID=" + mahai.getId() +
+                                                ", Zenbakia=" + mahai.getZenbakia() + ")"
+                                );
+
                                 mahaiakList.remove(mahai);
 
                                 if (mahaiEditatzen != null && mahaiEditatzen.getId() == mahai.getId()) {
@@ -505,6 +516,13 @@ public class MahaiakController {
                     })
                     .exceptionally(ex -> {
                         Platform.runLater(() -> {
+                            ActionLogger.log(
+                                    SessionContext.getCurrentUser(),
+                                    "ERROR",
+                                    "mahaiak",
+                                    "Errorea mahaia ezabatzean (ID=" + mahai.getId() + "): " + ex.getMessage()
+                            );
+
                             String errorMsg = ex.getMessage();
                             if (errorMsg.contains("Unable to cast") && errorMsg.contains("Int64")) {
                                 erakutsiMezua("Errore Teknikoa",
